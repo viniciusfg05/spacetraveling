@@ -1,0 +1,77 @@
+.containerHome {
+  max-width: 1120px;
+  margin: 0 auto;
+  text-align: center;
+  align-items: center;
+  padding: 0 2rem;
+  margin-top: 4rem;
+  justify-content: center;
+
+  .contentHome {
+    width: 700px;
+    margin: 0 auto;
+    margin-top: 1.5rem;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.2s;
+
+    .divide {
+      border-bottom: 1px solid var(--borde-header);
+      margin: 2rem 0;
+    }
+
+    &:hover {
+      color: var(--pink);
+    }
+
+    strong {
+      display: block;
+      font-size: 1.75rem;
+      font-family: 'Inter' sans-serif;
+      font-weight: 700;
+    }
+
+    p {
+      margin-top: 0.5rem;
+
+      font-size: 1.125rem;
+      color: var(--info);
+      font-family: 'Inter' sans-serif;
+      font-weight: 400;
+    }
+
+    .info {
+      width: 263px;
+      color: var(--info);
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      time {
+        display: flex;
+        text-align: center;
+        align-self: stretch;
+        align-items: center;
+
+        .infoCalender {
+          font-size: 1.2rem;
+          margin-right: 0.5rem;
+        }
+      }
+
+      cite {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-self: stretch;
+        align-items: center;
+
+        .infoUser {
+          font-size: 1.2rem;
+          margin-right: 0.5rem;
+        }
+      }
+    }
+  }
+}

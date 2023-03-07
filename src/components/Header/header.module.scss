@@ -1,0 +1,19 @@
+// TODO
+.containerHeader {
+  max-width: 1120px;
+  text-align: center;
+  height: 6.56rem;
+  align-items: center;
+  margin: 0 auto;
+  display: flex;
+  border-bottom: 1px solid var(--borde-header);
+  padding: 0 2rem;
+
+  .contentHeader {
+    width: 700px;
+
+    img {
+      cursor: pointer;
+    }
+  }
+}

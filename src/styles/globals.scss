@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --pink: #ff57b2;
+  --white: #f8f8f8;
+  --Background: #1a1d23;
+  --info: #bbbbbb;
+  --body: #d7d7d7;
+  --borde-header: #313741;
+}
+
+body {
+  background: var(--Background);
+  color: var(--white);
+}
+
+body,
+input,
+textarea,
+select,
+button {
+  font: 400 1rem 'Roboto', sans-serif;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit; // assume a cor do elemento pai
+}
