@@ -12,6 +12,7 @@ import styles from './home.module.scss';
 import Prismic from '@prismicio/client'
 import Link from 'next/link';
 import { RichText } from 'prismic-dom';
+import { useRouter } from 'next/router';
 
 interface Post {
   uid?: string;
@@ -46,6 +47,7 @@ export function formatDate(date: string): string {
 }
 
 export default function Home({ postsPagination }: HomeProps) {
+  const router = useRouter()
 
   const { next_page, results } = postsPagination;
   const [ posts, setPosts ] = useState<Post[]>(results)
@@ -55,6 +57,10 @@ export default function Home({ postsPagination }: HomeProps) {
     const response = await (await fetch(nextPage)).json();
       setNextPage(response.next_page)
       setPosts([...posts, ...response.results]);
+  }
+
+  if(router.isFallback) {
+    return <p>Carregando...</p>
   }
   
   return (

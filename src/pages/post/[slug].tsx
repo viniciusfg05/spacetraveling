@@ -48,7 +48,7 @@ export default function Post( {post}:PostProps ): JSX.Element {
           <div className={styles.ConteinerPosts}>
             <main className={styles.ContentMain}>
               <header>
-                <strong>{post.data.title}</strong>
+                <h2>{post.data.title}</h2>
                 <div className={styles.Infos}>
                   <time><AiOutlineCalendar className={styles.icons}/>{formatDate(post.first_publication_date)}</time>
                   <cite><FiUser className={styles.icons}/>{post.data.author}</cite>
@@ -101,6 +101,6 @@ const response = await prismic.getByUID('posts', String(slug), {})
 
 return {  
   props: { post: response },
-  revalidate: 10,
+  revalidate: 10 * 60 * 24,
 }
 };
