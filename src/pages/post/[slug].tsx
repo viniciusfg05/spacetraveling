@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { GetStaticPaths, GetStaticPathsContext, GetStaticProps } from 'next';
 import { RichText } from 'prismic-dom';
 
 import { AiOutlineCalendar } from 'react-icons/ai';
@@ -50,7 +50,7 @@ export default function Post({ post }: PostProps): JSX.Element {
             <div className={styles.Infos}>
               <time>
                 <AiOutlineCalendar className={styles.icons} />
-                {formatDate(post.first_publication_date)}
+                {formatDate(String(post.first_publication_date))}
               </time>
               <cite>
                 <FiUser className={styles.icons} />
@@ -82,6 +82,7 @@ export default function Post({ post }: PostProps): JSX.Element {
   );
 }
 
+// @ts-ignore
 export const getStaticPaths: GetStaticPaths = async () => {
   const prismic = getPrismicClient({});
   const posts = await prismic.getByType('posts', {
@@ -102,7 +103,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getStaticProps: GetStaticProps = async (context: any) => {
   const prismic = getPrismicClient({});
   const { slug } = context.params;
   const response = await prismic.getByUID('posts', String(slug), {});

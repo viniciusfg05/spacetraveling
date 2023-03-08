@@ -65,7 +65,7 @@ export default function Home({ postsPagination }: HomeProps) {
   // eslint-disable-next-line $rulename
   return (
     <div className={styles.containerHome}>
-      {posts.map(post => (
+      {posts.map((post) => (
         <Link key={post.uid} href={`/post/${post.uid}`}>
           <div className={styles.contentHome}>
             <strong>{post.data.title}</strong>
@@ -73,7 +73,7 @@ export default function Home({ postsPagination }: HomeProps) {
             <div className={styles.info}>
               <time>
                 <AiOutlineCalendar className={styles.infoCalender} />
-                {formatDate(post.first_publication_date)}
+                {formatDate(String(post?.first_publication_date!))}
               </time>
               <cite>
                 <FiUser className={styles.infoUser} /> {post.data.author}
@@ -106,7 +106,7 @@ export const getStaticProps: GetStaticProps = async () => {
   // eslint-disable-next-line $rulename
 
       uid: resultPostPrismic.uid,
-      first_publication_date: resultPostPrismic.first_publication_date,
+      first_publication_date: String(resultPostPrismic.first_publication_date!),
       data: {
         title: resultPostPrismic.data.title,
         subtitle: resultPostPrismic.data.subtitle,

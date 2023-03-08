@@ -4,6 +4,7 @@
   height: 6.56rem;
   display: flex;
   align-items: center;
+  margin: 0 auto;
   
 
   .contentHeader {
@@ -20,7 +21,7 @@
 
 @media(max-width: 768px) {
   .containerHeader {
-    height: 3.56rem;
+    height: 4.56rem;
 
     .contentHeader {
       display: flex;
