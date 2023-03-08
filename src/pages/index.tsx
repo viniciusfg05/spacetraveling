@@ -58,11 +58,11 @@ export default function Home({ postsPagination }: HomeProps) {
   }
 
   if (router.isFallback) {
-    /*eslint-disable */
+    // eslint-disable-next-line $rulename
     return <p>Carregando...</p>;
   }
 
-  /*eslint-disable */
+  // eslint-disable-next-line $rulename
   return (
     <div className={styles.containerHome}>
       {posts.map(post => (
@@ -97,13 +97,13 @@ export const getStaticProps: GetStaticProps = async () => {
   const posts = await prismic.getByType('posts', {
     lang: 'pt-BR',
   });
-  /*eslint-disable */
+  // eslint-disable-next-line $rulename
 
   const mapPostsResults = posts.results.map(resultPostPrismic => {
-  /*eslint-disable */
+  // eslint-disable-next-line $rulename
 
     return {
-  /*eslint-disable */
+  // eslint-disable-next-line $rulename
 
       uid: resultPostPrismic.uid,
       first_publication_date: resultPostPrismic.first_publication_date,
@@ -121,10 +121,10 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 
   return {
-  /*eslint-disable */
+  // eslint-disable-next-line $rulename
 
     props: {
-  /*eslint-disable */
+  // eslint-disable-next-line $rulename
 
       postsPagination,
     },
