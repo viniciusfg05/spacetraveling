@@ -1,4 +1,3 @@
-
 // import Prismic from '@prismicio/client';
 // import { DefaultClient } from '@prismicio/client/types/client';
 
@@ -10,8 +9,6 @@
 
 //   return prismic;
 // }
-
-
 
 import * as prismic from '@prismicio/client';
 import { HttpRequestLike } from '@prismicio/client';
@@ -27,7 +24,7 @@ export function getPrismicClient(config: PrismicConfig): prismic.Client {
   enableAutoPreviews({
     client,
     req: config.req,
-  })
+  });
 
   return client;
 }

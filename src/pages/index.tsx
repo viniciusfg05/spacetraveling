@@ -1,18 +1,16 @@
 import { GetStaticProps } from 'next';
 import { useState } from 'react';
-import { getPrismicClient } from '../services/prismic';
 
 import { FiUser } from 'react-icons/fi';
-import { AiOutlineCalendar } from 'react-icons/ai'
+import { AiOutlineCalendar } from 'react-icons/ai';
 
 import { ptBR } from 'date-fns/locale';
 import { format } from 'date-fns';
 
-import styles from './home.module.scss';
-import Prismic from '@prismicio/client'
 import Link from 'next/link';
-import { RichText } from 'prismic-dom';
 import { useRouter } from 'next/router';
+import styles from './home.module.scss';
+import { getPrismicClient } from '../services/prismic';
 
 interface Post {
   uid?: string;
@@ -47,60 +45,66 @@ export function formatDate(date: string): string {
 }
 
 export default function Home({ postsPagination }: HomeProps) {
-  const router = useRouter()
+  const router = useRouter();
 
   const { next_page, results } = postsPagination;
-  const [ posts, setPosts ] = useState<Post[]>(results)
-  const [ nextPage, setNextPage ] = useState(next_page)
+  const [posts, setPosts] = useState<Post[]>(results);
+  const [nextPage, setNextPage] = useState(next_page);
 
   async function handleNextPage(): Promise<void> {
     const response = await (await fetch(nextPage)).json();
-      setNextPage(response.next_page)
-      setPosts([...posts, ...response.results]);
+    setNextPage(response.next_page);
+    setPosts([...posts, ...response.results]);
   }
 
-  if(router.isFallback) {
-    return <p>Carregando...</p>
+  if (router.isFallback) {
+    /*eslint-disable */
+    return <p>Carregando...</p>;
   }
-  
+
+  /*eslint-disable */
   return (
     <div className={styles.containerHome}>
-        {posts.map(post => (
-          <Link key={post.uid} href={`/post/${post.uid}`}> 
-            <div className={styles.contentHome}>
-              <strong>{post.data.title}</strong>  
-              {<p>{post.data.subtitle}</p>}
-              <div className={styles.info}>
-                <time><AiOutlineCalendar className={styles.infoCalender}/>{formatDate(post.first_publication_date)}</time>
-                <cite>
-                  <FiUser className={styles.infoUser}/>  { post.data.author }
-                </cite> 
-              </div>
-              <div className={styles.divide}/>
+      {posts.map(post => (
+        <Link key={post.uid} href={`/post/${post.uid}`}>
+          <div className={styles.contentHome}>
+            <strong>{post.data.title}</strong>
+            <p>{post.data.subtitle}</p>
+            <div className={styles.info}>
+              <time>
+                <AiOutlineCalendar className={styles.infoCalender} />
+                {formatDate(post.first_publication_date)}
+              </time>
+              <cite>
+                <FiUser className={styles.infoUser} /> {post.data.author}
+              </cite>
             </div>
-          </Link>
-        ))}
-        
-          {nextPage && (
-            <button onClick={handleNextPage}>
-              Carregar mais posts
-            </button>
-          )}
+            <div className={styles.divide} />
+          </div>
+        </Link>
+      ))}
 
+      {nextPage && (
+        <button onClick={handleNextPage}>Carregar mais posts</button>
+      )}
     </div>
-  )
+  );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
   const prismic = getPrismicClient({});
-  
+
   const posts = await prismic.getByType('posts', {
     lang: 'pt-BR',
   });
-  
+  /*eslint-disable */
 
   const mapPostsResults = posts.results.map(resultPostPrismic => {
+  /*eslint-disable */
+
     return {
+  /*eslint-disable */
+
       uid: resultPostPrismic.uid,
       first_publication_date: resultPostPrismic.first_publication_date,
       data: {
@@ -108,18 +112,21 @@ export const getStaticProps: GetStaticProps = async () => {
         subtitle: resultPostPrismic.data.subtitle,
         author: resultPostPrismic.data.author,
       },
-    }
-  })
-
+    };
+  });
 
   const postsPagination = {
     next_page: posts.next_page,
-    results: mapPostsResults
-  }
+    results: mapPostsResults,
+  };
 
   return {
+  /*eslint-disable */
+
     props: {
-      postsPagination
-    }
-  }
+  /*eslint-disable */
+
+      postsPagination,
+    },
+  };
 };

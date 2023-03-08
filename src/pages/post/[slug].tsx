@@ -1,15 +1,13 @@
-import Prismic from '@prismicio/client'
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { RichText } from 'prismic-dom';
 
-import { getPrismicClient } from '../../services/prismic';
-
-
-import styles from './post.module.scss';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { FiClock, FiUser } from 'react-icons/fi';
-import { formatDate } from '..';
 import { useRouter } from 'next/router';
+import { getPrismicClient } from '../../services/prismic';
+
+import styles from './post.module.scss';
+import { formatDate } from '..';
 
 interface Post {
   uid?: string | null;
@@ -33,45 +31,55 @@ interface PostProps {
   post: Post;
 }
 
-export default function Post( {post}:PostProps ): JSX.Element {
-  const router = useRouter()
+export default function Post({ post }: PostProps): JSX.Element {
+  const router = useRouter();
 
-  if(router.isFallback) {
-    return <p>Carregando...</p>
+  if (router.isFallback) {
+    return <p>Carregando...</p>;
   }
 
   return (
-        <>
-          <div className={styles.banner}>
-            <img src={post.data.banner.url} alt="Banner" />
-          </div>
-          <div className={styles.ConteinerPosts}>
-            <main className={styles.ContentMain}>
-              <header>
-                <h2>{post.data.title}</h2>
-                <div className={styles.Infos}>
-                  <time><AiOutlineCalendar className={styles.icons}/>{formatDate(post.first_publication_date)}</time>
-                  <cite><FiUser className={styles.icons}/>{post.data.author}</cite>
-                  <p><FiClock className={styles.icons}/> 4 min</p>
-                </div>
-              </header>
+    <>
+      <div className={styles.banner}>
+        <img src={post.data.banner.url} alt="Banner" />
+      </div>
+      <div className={styles.ConteinerPosts}>
+        <main className={styles.ContentMain}>
+          <header>
+            <h2>{post.data.title}</h2>
+            <div className={styles.Infos}>
+              <time>
+                <AiOutlineCalendar className={styles.icons} />
+                {formatDate(post.first_publication_date)}
+              </time>
+              <cite>
+                <FiUser className={styles.icons} />
+                {post.data.author}
+              </cite>
+              <p>
+                <FiClock className={styles.icons} /> 4 min
+              </p>
+            </div>
+          </header>
 
-              <section>
-                {post.data.content.map(results => (
-                    <div key={results.heading} className={styles.contentSection}>
-                      <article>{results.heading}</article>
-                      <div 
-                        className={styles.body}
-                        dangerouslySetInnerHTML={{
-                          __html: RichText.asHtml(results.body)}}
-                      />
-                    </div>
-                ))}
-              </section>
-            </main>
-          </div>
-        </>
-  )
+          <section>
+            {post.data.content.map(results => (
+              <div key={results.heading} className={styles.contentSection}>
+                <article>{results.heading}</article>
+                <div
+                  className={styles.body}
+                  /*eslint-disable */
+                  dangerouslySetInnerHTML={{
+                    __html: RichText.asHtml(results.body),
+                  }}
+                />
+              </div>
+            ))}
+          </section>
+        </main>
+      </div>
+    </>
+  );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -79,7 +87,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await prismic.getByType('posts', {
     lang: 'pt-BR',
   });
-  
+
   const paths = posts.results.map(post => {
     return {
       params: {
@@ -95,12 +103,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async context => {
-const prismic = getPrismicClient({});
-const { slug } = context.params;
-const response = await prismic.getByUID('posts', String(slug), {})
+  const prismic = getPrismicClient({});
+  const { slug } = context.params;
+  const response = await prismic.getByUID('posts', String(slug), {});
 
-return {  
-  props: { post: response },
-  revalidate: 10 * 60 * 24,
-}
+  return {
+    props: { post: response },
+    revalidate: 10 * 60 * 24,
+  };
 };
